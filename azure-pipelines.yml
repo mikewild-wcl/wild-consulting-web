@@ -139,11 +139,19 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                $ftpServer = "$(FtpServer)"
+                # Get service connection details
+                $endpointJson = '$(ENDPOINT_DATA_$(ftpServerEndpoint))'
+                $endpoint = $endpointJson | ConvertFrom-Json
+                
+                # Extract FTP connection details from service endpoint
+                $ftpServer = $endpoint.host
+                $ftpUsername = $endpoint.auth.parameters.username
+                $ftpPassword = $endpoint.auth.parameters.password
+                
                 $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential("$(FtpUsername)", "$(FtpPassword)")
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
                 $ftpRequest.EnableSsl = $false
                 try {
                   $response = $ftpRequest.GetResponse()
