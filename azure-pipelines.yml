@@ -121,17 +121,18 @@ stages:
               rootDirectory: '$(Pipeline.Workspace)/files'
               filePatterns: 'app_offline.htm' 
               remoteDirectory: /httpdocs/
-              cleanContents: false
+              cleanContents: true
               preservePaths: true
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
+            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
               rootDirectory: '$(Pipeline.Workspace)/files'
               remoteDirectory: /httpdocs/
-              cleanContents: true
+              cleanContents: false
               preservePaths: true
 
           - task: PowerShell@2
