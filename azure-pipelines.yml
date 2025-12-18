@@ -115,7 +115,7 @@ stages:
                   </body>
                 </html>
                 "@
-                $content | Out-File -FilePath $offlineFilePath -Encoding utf8
+                $content | Out-File -FilePath $offlineFilePath -Encoding utf8 -Force
 
           - task: FtpUpload@2
             displayName: 'Copy app_offline.htm file to tell server we are going offline'
