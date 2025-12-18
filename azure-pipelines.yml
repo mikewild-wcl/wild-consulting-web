@@ -140,7 +140,8 @@ stages:
               targetType: 'inline'
               script: |
                 # Get service connection details
-                $endpointJson = '$(ENDPOINT_DATA_$(ftpServerEndpoint))'
+                # Hard-coded connection name because nested variable expansion doesn't work in that syntax.
+                $endpointJson = '$(ENDPOINT_DATA_wildconsulting_ftp)'
                 $endpoint = $endpointJson | ConvertFrom-Json
                 
                 # Extract FTP connection details from service endpoint
