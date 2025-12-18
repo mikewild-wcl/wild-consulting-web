@@ -140,10 +140,10 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                # Get service endpoint URL and credentials
-                $ftpServer = "$(ENDPOINT_URL_wildconsulting_ftp)" -replace "ftp://", ""
-                $ftpUsername = "$(ENDPOINT_AUTH_wildconsulting_ftp_USERNAME)"
-                $ftpPassword = "$(ENDPOINT_AUTH_wildconsulting_ftp_PASSWORD)"
+                # Get credentials from variable group
+                $ftpServer = "$(FtpServer)"
+                $ftpUsername = "$(FtpUsername)"
+                $ftpPassword = "$(FtpPassword)"
                 
                 $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
