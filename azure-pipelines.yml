@@ -83,6 +83,8 @@ stages:
   variables:
   - group: WildConsultingWebAppSettings
 
+  jobs:
+
   - deployment: Deploy
   pool:
     vmImage:  $(buildPoolVmImage)
