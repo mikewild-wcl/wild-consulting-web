@@ -138,7 +138,8 @@ stages:
               serverEndpoint: $(ftpServerEndpoint)
               rootDirectory: '$(Pipeline.Workspace)/files'
               remoteDirectory: /httpdocs/
-              cleanContents: true
+              # No need to clean because the offline step above did it
+              cleanContents: false
               preservePaths: true
 
           - task: PowerShell@2
