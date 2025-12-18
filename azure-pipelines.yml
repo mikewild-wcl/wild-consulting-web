@@ -126,6 +126,17 @@ stages:
               rootDirectory: '$(Pipeline.Workspace)/offline'
               filePatterns: 'app_offline.htm' 
               remoteDirectory: /httpdocs/
+              cleanContents: false
+              preservePaths: true
+
+          - task: FtpUpload@2
+            displayName: 'Clean and copy app_offline.htm file again'
+            inputs:
+              credentialsOption: 'serviceEndpoint'
+              serverEndpoint: $(ftpServerEndpoint)
+              rootDirectory: '$(Pipeline.Workspace)/offline'
+              filePatterns: 'app_offline.htm' 
+              remoteDirectory: /httpdocs/
               cleanContents: true
               preservePaths: true
             # Add retries in case the clean operation fails due to file locks
