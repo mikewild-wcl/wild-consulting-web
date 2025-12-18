@@ -79,8 +79,11 @@ stages:
         artifactName: 'wildconsultingweb'
 
 - stage: Deploy
-jobs:
-- deployment: Deploy
+
+  variables:
+  - group: WildConsultingWebAppSettings
+
+  - deployment: Deploy
   pool:
     vmImage:  $(buildPoolVmImage)
   environment: 'wildconsulting-web-env'
