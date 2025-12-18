@@ -115,6 +115,7 @@ stages:
                   </body>
                 </html>
                 "@
+                New-Item -Path $(Pipeline.Workspace) -Name offline -ItemType Directory
                 $content | Out-File -FilePath $offlineFilePath -Encoding utf8 -Force
 
           - task: FtpUpload@2
