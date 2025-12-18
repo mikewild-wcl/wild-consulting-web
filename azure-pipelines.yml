@@ -79,6 +79,10 @@ stages:
         artifactName: 'wildconsultingweb'
 
 - stage: Deploy
+
+  variables:
+  - group: WildConsultingWebAppSettings
+
   jobs:
   - deployment: Deploy
     pool:
