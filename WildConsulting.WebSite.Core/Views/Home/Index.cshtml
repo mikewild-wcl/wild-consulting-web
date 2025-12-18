@@ -1,4 +1,4 @@
-@model ViewModels.ContactViewModel
+﻿@model ViewModels.ContactViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -32,14 +32,14 @@
     </div>
 
     <div class="row g-4">
-        <div class="col-md-6 col-lg-3">
+        <div id="dotnet-services-card" class="col-md-6 col-lg-3">
             <div class="card h-100 shadow-sm">
                 <div class="card-body text-center">
                     <img class="card-body-img mb-3" src="~/images/code-file-icon.svg" alt="Code icon" />
                     <h3 class="card-title h4">Code</h3>
                     <p class="card-text">Modern .NET development with ASP.NET Core MVC, Razor Pages, Web APIs, and minimal APIs.</p>
                     <ul class="list-unstyled small text-start mt-3">
-                        <li class="mb-2">ASP.NET Core MVC & Razor Pages</li>
+                        <li class="mb-2">ASP.NET Core MVC &amp; Razor Pages</li>
                         <li class="mb-2">RESTful Web APIs</li>
                         <li class="mb-2">WPF Desktop Applications</li>
                     </ul>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
+            <div id="data-services-card" class="card h-100 shadow-sm">
                 <div class="card-body text-center">
                     <picture>
                         <source srcset="~/images/database_search.webp" type="image/webp">
@@ -59,9 +59,9 @@
                     <h3 class="card-title h4">Data</h3>
                     <p class="card-text">Expert database design and data analysis with modern tools and frameworks.</p>
                     <ul class="list-unstyled small text-start mt-3">
-                        <li class="mb-2">SQL Server & Cosmos DB</li>
-                        <li class="mb-2">Entity Framework Core & Dapper</li>
-                        <li class="mb-2">R & Python for analytics</li>
+                        <li class="mb-2">SQL Server &amp; Cosmos DB</li>
+                        <li class="mb-2">Entity Framework Core &amp; Dapper</li>
+                        <li class="mb-2">R &amp; Python for analytics</li>
                     </ul>
                     <a class="icon-attribution" href="https://dryicons.com/free-graphics/data-analytics?page=3">Icon by Dryicons</a>
                 </div>
@@ -69,15 +69,15 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
+            <div id="cloud-services-card" class="card h-100 shadow-sm">
                 <div class="card-body text-center">
                     <img class="card-body-img mb-3" src="~/images/cloud-computing.svg" alt="Cloud icon" />
                     <h3 class="card-title h4">Cloud</h3>
                     <p class="card-text">Azure cloud expertise with Functions, ServiceBus, Storage, and CI/CD pipelines.</p>
                     <ul class="list-unstyled small text-start mt-3">
-                        <li class="mb-2">Azure App Services & Functions</li>
+                        <li class="mb-2">Azure App Services &amp; Functions</li>
                         <li class="mb-2">Azure DevOps YAML Pipelines</li>
-                        <li class="mb-2">Bicep & ARM Templates</li>
+                        <li class="mb-2">Bicep &amp; ARM Templates</li>
                     </ul>
                     <a class="icon-attribution" href="https://dryicons.com/free-graphics/data-analytics">Icon by Dryicons</a>
                 </div>
@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-primary">
+            <div id="ai-services-card" class="card h-100 shadow-sm border-primary">
                 <div class="card-body text-center">
                     <div class="card-body-img mb-3 d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" fill="currentColor" class="bi bi-robot text-primary" viewBox="0 0 16 16">
@@ -93,11 +93,11 @@
                             <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
                         </svg>
                     </div>
-                    <h3 class="card-title h4">AI & ML <span class="badge bg-primary">New</span></h3>
+                    <h3 class="card-title h4">AI &amp; ML&nbsp;<span class="badge bg-primary">New</span></h3>
                     <p class="card-text">Generative AI development with Microsoft Semantic Kernel and Agent Framework.</p>
                     <ul class="list-unstyled small text-start mt-3">
                         <li class="mb-2">Azure OpenAI Integration</li>
-                        <li class="mb-2">RAG & Graph RAG with Neo4j</li>
+                        <li class="mb-2">RAG &amp; Graph RAG with Neo4j</li>
                         <li class="mb-2">AI-driven Development Tools</li>
                     </ul>
                 </div>
@@ -118,7 +118,7 @@
                 <strong>Mike Wild</strong>, Director of Wild Consulting, brings over 20 years of professional experience in Microsoft .NET C# development. Originally from New Zealand, Mike worked extensively in Taiwan before settling in the UK over a decade ago, now based in Oxford serving clients across the South and Midlands.
             </p>
             <p>
-                Mike has delivered enterprise-grade systems across multiple sectors including government, banking, insurance, and publishing. Recent projects include leading development teams on the Defra Extended Producer Responsibility (EPR) scheme, which raised over £1.4B in fees in October 2025, and building complex systems for the Education & Skills Funding Agency.
+                Mike has delivered enterprise-grade systems across multiple sectors including government, banking, insurance, and publishing. Recent projects include leading development teams on the Defra Extended Producer Responsibility (EPR) scheme, which raised over £1.4B in fees in October 2025, and building complex systems for the Education &amp; Skills Funding Agency.
             </p>
             <p>
                 Recognised for technical excellence and team leadership, Mike has extensive experience with Government Digital Service (GDS) agile delivery standards and has led teams in the UK, New Zealand, Taiwan, and Saudi Arabia. He is fluent in Mandarin Chinese.
@@ -143,7 +143,7 @@
             <div class="row g-2">
                 <div class="col-md-6">
                     <ul class="list-unstyled">
-                        <li class="mb-2"><strong>.NET & C#:</strong> ASP.NET Core MVC, Razor Pages, Web APIs</li>
+                        <li class="mb-2"><strong>.NET &amp; C#:</strong> ASP.NET Core MVC, Razor Pages, Web APIs</li>
                         <li class="mb-2"><strong>Azure:</strong> App Services, Functions, ServiceBus, Storage, Key Vault</li>
                         <li class="mb-2"><strong>Databases:</strong> SQL Server, Cosmos DB, EF Core, Dapper</li>
                         <li class="mb-2"><strong>CI/CD:</strong> Azure DevOps, YAML pipelines, Bicep, ARM</li>
@@ -161,11 +161,11 @@
         </div>
 
         <div class="col-lg-6 mb-4">
-            <h3 class="h4 mb-3">Emerging Skills & Interests</h3>
+            <h3 class="h4 mb-3">Emerging Skills &amp; Interests</h3>
             <div class="row g-2">
                 <div class="col-md-6">
                     <ul class="list-unstyled">
-                        <li class="mb-2"><strong>AI & ML:</strong> Semantic Kernel, Agent Framework, Azure OpenAI</li>
+                        <li class="mb-2"><strong>AI &amp; ML:</strong> Semantic Kernel, Agent Framework, Azure OpenAI</li>
                         <li class="mb-2"><strong>RAG:</strong> Retrieval Augmented Generation, Graph RAG with Neo4j</li>
                     </ul>
                 </div>
