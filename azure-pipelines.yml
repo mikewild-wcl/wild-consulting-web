@@ -81,7 +81,7 @@ stages:
 - stage: Deploy
 
   variables:
-  - group: WildConsultingWebAppSettings
+  - group: WildConsultingDeploymentSettings
 
   jobs:
   - deployment: Deploy
@@ -111,7 +111,7 @@ stages:
                   </head>
                   <body>
                     <h1>We'll be back soon!</h1>
-                    <p>Sorry for the inconvenience but we're performing some maintenance at the moment. We'll be back online shortly!</p>
+                    <p>Sorry for the inconvenience but we're updating our website. We'll be back online very soon.</p>
                   </body>
                 </html>
                 "@
@@ -122,7 +122,7 @@ stages:
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
-              rootDirectory: '$(Pipeline.Workspace)/files'
+              rootDirectory: '$(Pipeline.Workspace)/offline'
               filePatterns: 'app_offline.htm' 
               remoteDirectory: /httpdocs/
               cleanContents: true
@@ -130,7 +130,6 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
-            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
