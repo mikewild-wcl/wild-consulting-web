@@ -128,17 +128,16 @@ stages:
               cleanContents: false
               preservePaths: true
 
-          # - task: FtpUpload@2
-          #   # Copy file a second time   
-          #   displayName: 'Recopy app_offline.htm file and clean directory this time'
-          #   inputs:
-          #     credentialsOption: 'serviceEndpoint'
-          #     serverEndpoint: $(ftpServerEndpoint)
-          #     rootDirectory: '$(Pipeline.Workspace)/offline'
-          #     filePatterns: 'app_offline.htm' 
-          #     remoteDirectory: /httpsdocs/
-          #     cleanContents: true
-          #     preservePaths: true
+          - task: FtpUpload@2
+            displayName: 'Recopy app_offline.htm file and clean directory this time'
+            inputs:
+              credentialsOption: 'serviceEndpoint'
+              serverEndpoint: $(ftpServerEndpoint)
+              rootDirectory: '$(Pipeline.Workspace)/offline'
+              filePatterns: 'app_offline.htm' 
+              remoteDirectory: /httpdocs/
+              cleanContents: true
+              preservePaths: true
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
@@ -146,7 +145,7 @@ stages:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
               rootDirectory: '$(Pipeline.Workspace)/files'
-              remoteDirectory: /httpsdocs/
+              remoteDirectory: /httpdocs/
               cleanContents: true
               preservePaths: true
 
