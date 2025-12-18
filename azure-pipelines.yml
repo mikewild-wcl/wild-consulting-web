@@ -103,7 +103,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                $offlineFilePath = "$(Pipeline.Workspace)/files/app_offline.htm"
+                $offlineFilePath = "$(Pipeline.Workspace)/offline/app_offline.htm"
                 $content = @"
                 <html>
                   <head>
@@ -118,15 +118,27 @@ stages:
                 $content | Out-File -FilePath $offlineFilePath -Encoding utf8
 
           - task: FtpUpload@2
-            displayName: 'Copy offline htm file to server'
+            displayName: 'Copy app_offline.htm file to tell server we are going offline'
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
               rootDirectory: '$(Pipeline.Workspace)/offline'
               filePatterns: 'app_offline.htm' 
               remoteDirectory: /httpdocs/
-              cleanContents: true
+              cleanContents: false
               preservePaths: true
+
+          # - task: FtpUpload@2
+          #   # Copy file a second time   
+          #   displayName: 'Recopy app_offline.htm file and clean directory this time'
+          #   inputs:
+          #     credentialsOption: 'serviceEndpoint'
+          #     serverEndpoint: $(ftpServerEndpoint)
+          #     rootDirectory: '$(Pipeline.Workspace)/offline'
+          #     filePatterns: 'app_offline.htm' 
+          #     remoteDirectory: /httpsdocs/
+          #     cleanContents: true
+          #     preservePaths: true
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
@@ -134,8 +146,8 @@ stages:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
               rootDirectory: '$(Pipeline.Workspace)/files'
-              remoteDirectory: /httpdocs/
-              cleanContents: false
+              remoteDirectory: /httpsdocs/
+              cleanContents: true
               preservePaths: true
 
           - task: PowerShell@2
