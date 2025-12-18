@@ -4,10 +4,8 @@
 # https://subhankarsarkar.com/dot-net6-azure-web-app-deployment-using-azure-devops-pipeline/
 #
 
-
 trigger:
 - master
-- feature/rewrite-with-claude
 
 pr: none # Disable PR trigger
 
@@ -136,22 +134,22 @@ stages:
               cleanContents: true
               preservePaths: true
 
-          # - task: PowerShell@2
-          #   displayName: 'Delete app_offline.htm file'
-          #   inputs:
-          #     targetType: 'inline'
-          #     script: |
-          #       $ftpServer = "$(FtpServer)"
-          #       $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
-          #       $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
-          #       $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-          #       $ftpRequest.Credentials = New-Object System.Net.NetworkCredential("$(FtpUsername)", "$(FtpPassword)")
-          #       $ftpRequest.EnableSsl = $false
-          #       try {
-          #         $response = $ftpRequest.GetResponse()
-          #         Write-Host "app_offline.htm deleted successfully"
-          #         $response.Close()
-          #       } catch {
-          #         Write-Host "Error deleting app_offline.htm: $_"
-          #       }
+          - task: PowerShell@2
+            displayName: 'Delete app_offline.htm file'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $ftpServer = "$(FtpServer)"
+                $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
+                $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
+                $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential("$(FtpUsername)", "$(FtpPassword)")
+                $ftpRequest.EnableSsl = $false
+                try {
+                  $response = $ftpRequest.GetResponse()
+                  Write-Host "app_offline.htm deleted successfully"
+                  $response.Close()
+                } catch {
+                  Write-Host "Error deleting app_offline.htm: $_"
+                }
           
