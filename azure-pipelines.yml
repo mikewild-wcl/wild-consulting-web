@@ -139,15 +139,10 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                # Get service connection details
-                # Hard-coded connection name because nested variable expansion doesn't work in that syntax.
-                $endpointJson = '$(ENDPOINT_DATA_wildconsulting_ftp)'
-                $endpoint = $endpointJson | ConvertFrom-Json
-                
-                # Extract FTP connection details from service endpoint
-                $ftpServer = $endpoint.host
-                $ftpUsername = $endpoint.auth.parameters.username
-                $ftpPassword = $endpoint.auth.parameters.password
+                # Get service endpoint URL and credentials
+                $ftpServer = "$(ENDPOINT_URL_wildconsulting_ftp)" -replace "ftp://", ""
+                $ftpUsername = "$(ENDPOINT_AUTH_wildconsulting_ftp_USERNAME)"
+                $ftpPassword = "$(ENDPOINT_AUTH_wildconsulting_ftp_PASSWORD)"
                 
                 $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
