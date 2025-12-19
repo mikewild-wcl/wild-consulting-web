@@ -81,87 +81,97 @@ stages:
 - stage: Deploy
 
   variables:
-  - group: WildConsultingWebAppSettings
+  - group: WildConsultingDeploymentSettings
 
   jobs:
-
   - deployment: Deploy
-  pool:
-    vmImage:  $(buildPoolVmImage)
-  environment: 'wildconsulting-web-env'
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - task: ExtractFiles@1
-          displayName: 'Extract files'
-          inputs:
-            archiveFilePatterns: "$(agent.builddirectory)/**/*.zip"
-            destinationFolder: '$(Pipeline.Workspace)/files'
+    pool:
+      vmImage:  $(buildPoolVmImage)
+    environment: 'wildconsulting-web-env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: ExtractFiles@1
+            displayName: 'Extract files'
+            inputs:
+              archiveFilePatterns: "$(agent.builddirectory)/**/*.zip"
+              destinationFolder: '$(Pipeline.Workspace)/files'
 
-        - task: PowerShell@2
-          displayName: 'Create app_offline.htm'
-          inputs:
-            targetType: 'inline'
-            script: |
-              $offlineFilePath = "$(Pipeline.Workspace)/files/app_offline.htm"
-              $content = @"
-              <html>
-                <head>
-                  <title>Site Under Maintenance</title>
-                </head>
-                <body>
-                  <h1>We'll be back soon!</h1>
-                  <p>Sorry for the inconvenience but we're performing some maintenance at the moment. We'll be back online shortly!</p>
-                </body>
-              </html>
-              "@
-              $content | Out-File -FilePath $offlineFilePath -Encoding utf8
+          - task: PowerShell@2
+            displayName: 'Create app_offline.htm'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $offlineFilePath = "$(Pipeline.Workspace)/offline/app_offline.htm"
+                $content = @"
+                <html>
+                  <head>
+                    <title>Site Under Maintenance</title>
+                  </head>
+                  <body>
+                    <h1>We'll be back soon!</h1>
+                    <p>Sorry for the inconvenience but we're updating our website. We'll be back online very soon.</p>
+                  </body>
+                </html>
+                "@
+                New-Item -Path $(Pipeline.Workspace) -Name offline -ItemType Directory
+                $content | Out-File -FilePath $offlineFilePath -Encoding utf8 -Force
 
-        - task: FtpUpload@2
-          displayName: 'Copy offline htm file to server'
-          inputs:
-            credentialsOption: 'serviceEndpoint'
-            serverEndpoint: $(ftpServerEndpoint)
-            rootDirectory: '$(Pipeline.Workspace)/files'
-            filePatterns: 'app_offline.htm' 
-            remoteDirectory: /httpdocs/
-            cleanContents: false
-            preservePaths: true
+          - task: FtpUpload@2
+            displayName: 'Copy app_offline.htm file to tell server we are going offline'
+            inputs:
+              credentialsOption: 'serviceEndpoint'
+              serverEndpoint: $(ftpServerEndpoint)
+              rootDirectory: '$(Pipeline.Workspace)/offline'
+              filePatterns: 'app_offline.htm' 
+              remoteDirectory: /httpdocs/
+              cleanContents: false
+              preservePaths: true
 
-        - task: FtpUpload@2
-          displayName: 'FTP Upload'
-          inputs:
-            credentialsOption: 'serviceEndpoint'
-            serverEndpoint: $(ftpServerEndpoint)
-            rootDirectory: '$(Pipeline.Workspace)/files'
-            remoteDirectory: /httpdocs/
-            cleanContents: true
-            preservePaths: true
+          - task: FtpUpload@2
+            displayName: 'Clean and copy app_offline.htm file again'
+            inputs:
+              credentialsOption: 'serviceEndpoint'
+              serverEndpoint: $(ftpServerEndpoint)
+              rootDirectory: '$(Pipeline.Workspace)/offline'
+              filePatterns: 'app_offline.htm' 
+              remoteDirectory: /httpdocs/
+              cleanContents: true
+              preservePaths: true
+            # Add retries in case the clean operation fails due to file locks
+            retryCountOnTaskFailure: 3
 
-        - task: PowerShell@2
-          displayName: 'Delete app_offline.htm file'
-          env:
-            ENDPOINT_URL: $(SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)
-            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-          inputs:
-            targetType: 'inline'
-            script: |
-              # Get credentials from variable group
-              $ftpServer = "$(FtpServer)"
-              $ftpUsername = "$(FtpUsername)"
-              $ftpPassword = "$(FtpPassword)"
-                
-              $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
-              $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
-              $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-              $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
-              $ftpRequest.EnableSsl = $false
-              try {
-                $response = $ftpRequest.GetResponse()
-                Write-Host "app_offline.htm deleted successfully"
-                $response.Close()
-              } catch {
-                Write-Host "Error deleting app_offline.htm: $_"
-              }
+          - task: FtpUpload@2
+            displayName: 'FTP Upload'
+            inputs:
+              credentialsOption: 'serviceEndpoint'
+              serverEndpoint: $(ftpServerEndpoint)
+              rootDirectory: '$(Pipeline.Workspace)/files'
+              remoteDirectory: /httpdocs/
+              # No need to clean because the offline step above did it
+              cleanContents: false
+              preservePaths: true
+         
+          - task: PowerShell@2
+            displayName: 'Delete app_offline.htm file'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $ftpServer = '$(FtpServer)'.Trim()
+                $ftpUsername = '$(FtpUsername)'.Trim()                
+                $ftpUri = "ftp://$ftpUsername@$ftpServer/httpdocs/app_offline.htm"
+                $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
+                $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, '$(FtpPassword)')
+                $ftpRequest.EnableSsl = $false
+
+                try {
+                  Write-Host "calling FTP to deploy to $ftpUri"
+                  $response = $ftpRequest.GetResponse()
+                  Write-Host "app_offline.htm deleted successfully"
+                  $response.Close()
+                } catch {
+                  Write-Host "Error deleting app_offline.htm: $_"
+                }
           
