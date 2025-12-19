@@ -12,8 +12,8 @@ pr: none # Disable PR trigger
 variables:
   buildConfiguration: 'Release'
   buildPoolVmImage: 'ubuntu-latest'
-  dotNetFramework: 'net8.0'
-  dotNetVersion: '8.0.x'
+  dotNetFramework: 'net10.0'
+  dotNetVersion: '10.0.x'
   #targetRuntime: 'linux-x64'
   targetRuntime: 'win-x86'
   ftpServerEndpoint: 'wildconsulting_ftp'
