@@ -21,6 +21,7 @@ variables:
 stages:
 
 - stage: Build
+  enabled: false
 
   variables:
   - group: WildConsultingWebAppSettings
@@ -131,6 +132,7 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'Clean and copy app_offline.htm file again'
+            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
@@ -144,6 +146,7 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
+            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
@@ -152,6 +155,19 @@ stages:
               # No need to clean because the offline step above did it
               cleanContents: false
               preservePaths: true
+
+          - task: PowerShell@2
+            displayName: 'Debugging'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Get credentials from variable group
+                $ftpServer = "$(FtpServer)"
+                $ftpUsername = "$(FtpUsername)"
+                $ftpPassword = "$(FtpPassword)"
+                Write-Host "FTP Server: $ftpServer"
+                Write-Host "FTP Username: $ftpUsername"
+                Write-Host "FTP Password: $ftpPassword"                
 
           - task: PowerShell@2
             displayName: 'Delete app_offline.htm file'
@@ -168,7 +184,7 @@ stages:
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
                 $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
                 # https://stackoverflow.com/questions/2333858/powershell-ftp-upload-error-530-not-logged-in
-                $ftpRequest.EnableSsl = true
+                $ftpRequest.EnableSsl = $true
                 try {
                   $response = $ftpRequest.GetResponse()
                   Write-Host "app_offline.htm deleted successfully"
