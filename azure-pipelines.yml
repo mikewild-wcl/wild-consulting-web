@@ -166,11 +166,11 @@ stages:
               targetType: 'inline'
               script: |
                 # Get credentials from variable group
-                $ftpServer = "$(FtpServer)".Trim()
-                $ftpUsername = "$(FtpUsername)".Trim()
-                $ftpPassword = "$(FtpPassword)"
+                $ftpServer = '$(FtpServer)'.Trim()
+                $ftpUsername = '$(FtpUsername)'.Trim()
+                $ftpPassword = '$(FtpPassword)'
                 
-                $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
+                $ftpUri = "ftp://$ftpUsername@$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
                 ## ftp://ftp.wildconsulting.co.uk/httpdocs/app_offline.htm
@@ -181,7 +181,7 @@ stages:
                 Write-Host "FTP Username: $ftpUsername"
                 Write-Host "FTP uri: $ftpUri"
 
-                $credentials = New-Object System.Net.NetworkCredential($ftpUsername.Trim(),'$ftpPassword')
+                $credentials = New-Object System.Net.NetworkCredential($ftpUsername,$ftpPassword)
                 $ftprequest.Credentials = $credentials
 
                 # https://stackoverflow.com/questions/2333858/powershell-ftp-upload-error-530-not-logged-in
