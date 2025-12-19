@@ -52,7 +52,6 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: Test
-      enabled: false
       inputs:
         command: test
         projects: '**/*.Tests.csproj'
@@ -68,7 +67,6 @@ stages:
 
     - task: FileTransform@2
       displayName: 'Transform appsettings'
-      enabled: false
       inputs:
         folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         xmlTransformationRules: ''
@@ -96,7 +94,6 @@ stages:
           steps:
           - task: ExtractFiles@1
             displayName: 'Extract files'
-            enabled: false
             inputs:
               archiveFilePatterns: "$(agent.builddirectory)/**/*.zip"
               destinationFolder: '$(Pipeline.Workspace)/files'
@@ -134,7 +131,6 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'Clean and copy app_offline.htm file again'
-            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
@@ -148,7 +144,6 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'FTP Upload'
-            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
@@ -163,20 +158,16 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                # Get credentials from variable group
                 $ftpServer = '$(FtpServer)'.Trim()
-                $ftpUsername = '$(FtpUsername)'.Trim()
-                $ftpPassword = '$(FtpPassword)'
-                
+                $ftpUsername = '$(FtpUsername)'.Trim()                
                 $ftpUri = "ftp://$ftpUsername@$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
-                Write-Host "FTP uri: $ftpUri"
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, '$(FtpPassword)')
                 $ftpRequest.EnableSsl = $false
 
                 try {
-                  Write-Host "calling FTP..."
+                  Write-Host "calling FTP to deploy to $ftpUri"
                   $response = $ftpRequest.GetResponse()
                   Write-Host "app_offline.htm deleted successfully"
                   $response.Close()
