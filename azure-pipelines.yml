@@ -186,9 +186,9 @@ stages:
                 $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, "$ftpPassword")
                 # https://stackoverflow.com/questions/2333858/powershell-ftp-upload-error-530-not-logged-in
-                $ftpRequest.EnableSsl = $true
+                $ftpRequest.EnableSsl = $false
                 try {
                   $response = $ftpRequest.GetResponse()
                   Write-Host "app_offline.htm deleted successfully"
