@@ -159,20 +159,7 @@ stages:
               # No need to clean because the offline step above did it
               cleanContents: false
               preservePaths: true
-
-          - task: PowerShell@2
-            displayName: 'Debugging'
-            inputs:
-              targetType: 'inline'
-              script: |
-                # Get credentials from variable group
-                $ftpServer = "$(FtpServer)"
-                $ftpUsername = "$(FtpUsername)"
-                $ftpPassword = "$(FtpPassword)"
-                Write-Host "FTP Server: $ftpServer"
-                Write-Host "FTP Username: $ftpUsername"
-                Write-Host "FTP Password: $ftpPassword"
-
+         
           - task: PowerShell@2
             displayName: 'Delete app_offline.htm file'
             inputs:
@@ -186,9 +173,19 @@ stages:
                 $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, "$ftpPassword")
+                # $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
+
+                Write-Host "FTP Server: $ftpServer"
+                Write-Host "FTP Username: $ftpUsername"
+                Write-Host "FTP uri: $ftpUri"
+
+                $credentials = New-Object System.Net.NetworkCredential($ftpUsername,'$ftpPassword')
+                $ftprequest.Credentials = $credentials
+
                 # https://stackoverflow.com/questions/2333858/powershell-ftp-upload-error-530-not-logged-in
                 $ftpRequest.EnableSsl = $false
+                Write-Host "ftpRequest.EnableSsl: $ftpRequest.EnableSsl"
+
                 try {
                   $response = $ftpRequest.GetResponse()
                   Write-Host "app_offline.htm deleted successfully"
