@@ -21,7 +21,6 @@ variables:
 stages:
 
 - stage: Build
-  enabled: false
 
   variables:
   - group: WildConsultingWebAppSettings
@@ -29,6 +28,7 @@ stages:
   jobs:
   - job: Build
     displayName: 'Build website'
+    enabled: false
     pool:
       vmImage:  $(buildPoolVmImage)
     steps:
