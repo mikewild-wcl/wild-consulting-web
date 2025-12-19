@@ -170,10 +170,11 @@ stages:
                 $ftpUsername = "$(FtpUsername)"
                 $ftpPassword = "$(FtpPassword)"
                 
-                $ftpUri = "ftp://$ftpServer/httpdocs/app_offline.htm"
+                $ftpUri = "ftp://$(ftpUsername)@$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                
+                ## ftp://ftp.wildconsulting.co.uk/httpdocs/app_offline.htm
+                ## ftp://zwildcon3410uk@ftp.wildconsulting.co.uk/httpdocs/app_offline.htm
                 # $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
 
                 Write-Host "FTP Server: $ftpServer"
