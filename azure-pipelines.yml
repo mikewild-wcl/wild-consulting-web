@@ -124,6 +124,7 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'Copy app_offline.htm file to tell server we are going offline'
+            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
