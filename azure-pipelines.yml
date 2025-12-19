@@ -28,7 +28,6 @@ stages:
   jobs:
   - job: Build
     displayName: 'Build website'
-    enabled: false
     pool:
       vmImage:  $(buildPoolVmImage)
     steps:
@@ -53,6 +52,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: Test
+      enabled: false
       inputs:
         command: test
         projects: '**/*.Tests.csproj'
@@ -68,6 +68,7 @@ stages:
 
     - task: FileTransform@2
       displayName: 'Transform appsettings'
+      enabled: false
       inputs:
         folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         xmlTransformationRules: ''
@@ -95,12 +96,14 @@ stages:
           steps:
           - task: ExtractFiles@1
             displayName: 'Extract files'
+            enabled: false
             inputs:
               archiveFilePatterns: "$(agent.builddirectory)/**/*.zip"
               destinationFolder: '$(Pipeline.Workspace)/files'
 
           - task: PowerShell@2
             displayName: 'Create app_offline.htm'
+            enabled: false
             inputs:
               targetType: 'inline'
               script: |
@@ -167,7 +170,7 @@ stages:
                 $ftpPassword = "$(FtpPassword)"
                 Write-Host "FTP Server: $ftpServer"
                 Write-Host "FTP Username: $ftpUsername"
-                Write-Host "FTP Password: $ftpPassword"                
+                Write-Host "FTP Password: $ftpPassword"
 
           - task: PowerShell@2
             displayName: 'Delete app_offline.htm file'
