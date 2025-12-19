@@ -103,7 +103,6 @@ stages:
 
           - task: PowerShell@2
             displayName: 'Create app_offline.htm'
-            enabled: false
             inputs:
               targetType: 'inline'
               script: |
@@ -124,7 +123,6 @@ stages:
 
           - task: FtpUpload@2
             displayName: 'Copy app_offline.htm file to tell server we are going offline'
-            enabled: false
             inputs:
               credentialsOption: 'serviceEndpoint'
               serverEndpoint: $(ftpServerEndpoint)
@@ -173,21 +171,9 @@ stages:
                 $ftpUri = "ftp://$ftpUsername@$ftpServer/httpdocs/app_offline.htm"
                 $ftpRequest = [System.Net.FtpWebRequest]::Create($ftpUri)
                 $ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::DeleteFile
-                ## ftp://ftp.wildconsulting.co.uk/httpdocs/app_offline.htm
-                ## ftp://zwildcon3410uk@ftp.wildconsulting.co.uk/httpdocs/app_offline.htm
-                # $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
-
-                Write-Host "FTP Server: $ftpServer"
-                Write-Host "FTP Username: $ftpUsername"
+                $ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUsername, $ftpPassword)
                 Write-Host "FTP uri: $ftpUri"
-
-                $credentials = New-Object System.Net.NetworkCredential($ftpUsername,$ftpPassword)
-                $ftprequest.Credentials = $credentials
-
-                # https://stackoverflow.com/questions/2333858/powershell-ftp-upload-error-530-not-logged-in
-                # $ftpRequest.EnableSsl = $false
-                # $ftpRequest.UseBinary = 1
-                # $ftpRequest.KeepAlive = 0
+                $ftpRequest.EnableSsl = $false
 
                 try {
                   Write-Host "calling FTP..."
