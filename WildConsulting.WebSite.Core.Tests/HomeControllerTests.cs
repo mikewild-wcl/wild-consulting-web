@@ -20,7 +20,7 @@ public class HomeControllerTests
     }
 
     [Fact]
-    public void HomeController_Index_Should_Return_ViewResult()
+    public void HomeController_Index_Should_Return_ViewResult_With_ContactViewModel()
     {
         var controller = new HomeController(_mockConfiguration.Object);
 
@@ -33,42 +33,10 @@ public class HomeControllerTests
         viewResult.Should().NotBeNull();
         viewResult.ViewData.ModelState.IsValid.Should().BeTrue();
         viewResult.ViewData.ModelState.ErrorCount.Should().Be(0);
-    }
-
-    [Fact]
-    public void HomeController_About_Should_Return_ViewResult()
-    {
-        var controller = new HomeController(_mockConfiguration.Object);
-
-        var result = controller.About();
-
-        result.Should().NotBeNull();
-        result.Should().BeOfType<ViewResult>();
-
-        var viewResult = result as ViewResult;
-        viewResult.Should().NotBeNull();
-        viewResult.ViewData.ModelState.IsValid.Should().BeTrue();
-        viewResult.ViewData.ModelState.ErrorCount.Should().Be(0);
-    }
-        
-    [Fact]
-    public void HomeController_Contact_Should_Return_ViewResult()
-    {
-        var controller = new HomeController(_mockConfiguration.Object);
-
-        var result = controller.Contact();
-
-        result.Should().NotBeNull();
-        result.Should().BeOfType<ViewResult>();
-
-        var viewResult = result as ViewResult;
-        viewResult.Should().NotBeNull();
-        viewResult.ViewData.ModelState.IsValid.Should().BeTrue();
-        viewResult.ViewData.ModelState.ErrorCount.Should().Be(0);
 
         viewResult.ViewData.Model.Should().BeAssignableTo<ContactViewModel>();
         var viewModel = viewResult.ViewData.Model as ContactViewModel;
         viewModel.Should().NotBeNull();
-        viewModel.Email.Should().Be(TestEmailAddress);
+        viewModel!.Email.Should().Be(TestEmailAddress);
     }
 }

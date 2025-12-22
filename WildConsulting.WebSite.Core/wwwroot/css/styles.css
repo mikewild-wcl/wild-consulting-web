@@ -1,0 +1,164 @@
+/* Color Overrides */
+:root {
+    --bs-primary: #5b8bc5;
+    --bs-primary-rgb: 91, 139, 197;
+}
+
+.btn-primary {
+    --bs-btn-bg: #5b8bc5;
+    --bs-btn-border-color: #5b8bc5;
+    --bs-btn-hover-bg: #4a75a8;
+    --bs-btn-hover-border-color: #4a75a8;
+}
+
+.text-primary {
+    color: #5b8bc5 !important;
+}
+
+.border-primary {
+    border-color: #5b8bc5 !important;
+}
+
+.bg-primary {
+    background-color: #5b8bc5 !important;
+}
+
+/* Global Styles */
+body {
+    padding-top: 56px;
+    min-height: 100vh;
+    position: relative;
+    background-color: #f0eee9;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Section Styling */
+section {
+    scroll-margin-top: 70px;
+}
+
+.hero-section {
+    min-height: 30vh;
+    display: flex;
+    /*align-items: center;*/
+}
+
+.services-section {
+    background: linear-gradient(135deg, #f0eee9 0%, #ffffff 100%);
+}
+
+.about-section {
+    background-color: #f0eee9;
+}
+
+.skills-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f0eee9 100%);
+}
+
+.contact-section {
+    background: linear-gradient(135deg, #f0eee9 0%, #e9ecef 100%);
+}
+
+/* Card Enhancements */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-body-img {
+    height: 96px;
+    width: 96px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon-attribution:hover {
+    color: #495057;
+    text-decoration: underline;
+}
+
+/* Navigation Enhancements */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Button Enhancements */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    font-weight: 500;
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem;
+}
+
+/* Typography */
+.display-4, .display-5 {
+    font-weight: 700;
+}
+
+.lead {
+    font-size: 1.15rem;
+}
+
+/* Skills Section */
+.skills-section ul {
+    line-height: 1.8;
+}
+
+.skills-section strong {
+    color: #5b8bc5;
+}
+
+.skills-section .col-lg-6 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Contact Section */
+.contact-section a {
+    color: #5b8bc5;
+}
+
+.contact-section .btn-outline-dark:hover,
+.contact-section .btn-outline-primary:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .display-5 {
+        font-size: 1.75rem;
+    }
+}

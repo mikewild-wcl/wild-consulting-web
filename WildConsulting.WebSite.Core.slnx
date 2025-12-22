@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/copilot-instructions.md" />
+    <File Path=".gitignore" />
+    <File Path="azure-pipelines.yml" />
+    <File Path="CLAUDE.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="WildConsulting.WebSite.Core.Tests/WildConsulting.WebSite.Core.Tests.csproj" />
+  <Project Path="WildConsulting.WebSite.Core/WildConsulting.WebSite.Core.csproj" />
+</Solution>

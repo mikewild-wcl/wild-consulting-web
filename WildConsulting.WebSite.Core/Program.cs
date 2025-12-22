@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 // ReSharper disable All
 
 var featuresList = new StringValues(
@@ -74,9 +71,9 @@ app.UseXContentTypeOptions()
         .ObjectSources(s => s.None()))
     .Use(async (context, next) =>
     {
-        context.Response.Headers.Add("Expect-CT", "max-age=0, enforce"); //Not using report-uri=
-        context.Response.Headers.Add("Feature-Policy", featuresList);
-        context.Response.Headers.Add("Permissions-Policy", permissionsList);
+        context.Response.Headers.Append("Expect-CT", "max-age=0, enforce"); //Not using report-uri=
+        context.Response.Headers.Append("Feature-Policy", featuresList);
+        context.Response.Headers.Append("Permissions-Policy", permissionsList);
         await next.Invoke();
     });
 
@@ -86,11 +83,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-});
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+await app.RunAsync();
