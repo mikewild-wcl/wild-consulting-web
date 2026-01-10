@@ -10,7 +10,7 @@ Website code and content copyright 2019-2026 Wild Consulting Limited.
 
 Code can be found at https://github.com/mikewild-wcl/wildconsultingweb.
 
-Build pipeline can be found at https://dev.azure.com/wildconsultingltd.
+Build pipeline can be found at https://dev.azure.com/wildconsultingltd/wild-consulting-web.
 
 The pipeline includes steps to create an app_offline.htm file to take the site offline during deployment, and remove it afterwards to bring the site back online.
 
