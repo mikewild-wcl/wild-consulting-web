@@ -26,17 +26,17 @@ public class HomeControllerTests
 
         var result = controller.Index();
 
-        result.Should().NotBeNull();
-        result.Should().BeOfType<ViewResult>();
+        result.ShouldNotBeNull();
+        result.ShouldBeOfType<ViewResult>();
 
         var viewResult = result as ViewResult;
-        viewResult.Should().NotBeNull();
-        viewResult.ViewData.ModelState.IsValid.Should().BeTrue();
-        viewResult.ViewData.ModelState.ErrorCount.Should().Be(0);
+        viewResult.ShouldNotBeNull();
+        viewResult.ViewData.ModelState.IsValid.ShouldBeTrue();
+        viewResult.ViewData.ModelState.ErrorCount.ShouldBe(0);
 
-        viewResult.ViewData.Model.Should().BeAssignableTo<ContactViewModel>();
+        viewResult.ViewData.Model.ShouldBeAssignableTo<ContactViewModel>();
         var viewModel = viewResult.ViewData.Model as ContactViewModel;
-        viewModel.Should().NotBeNull();
-        viewModel!.Email.Should().Be(TestEmailAddress);
+        viewModel.ShouldNotBeNull();
+        viewModel!.Email.ShouldBe(TestEmailAddress);
     }
 }
