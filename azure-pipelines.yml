@@ -82,7 +82,7 @@ stages:
       displayName: Package and upload as a build artifact
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'wildconsultingweb'
+        artifactName: 'wild-consulting-web'
 
 - stage: Deploy
 
