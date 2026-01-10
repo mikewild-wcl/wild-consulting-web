@@ -5,7 +5,13 @@
 #
 
 trigger:
-- master
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    exclude:
+    - README.md
 
 pr: none # Disable PR trigger
 
