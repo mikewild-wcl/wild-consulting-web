@@ -9,4 +9,12 @@
     <Company>Wild Consulting Limited</Company>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference
+	   Include="SonarAnalyzer.CSharp"
+       PrivateAssets="all"
+       Condition="$(MSBuildProjectExtension) == '.csproj'" />
+  </ItemGroup>
+
 </Project>
