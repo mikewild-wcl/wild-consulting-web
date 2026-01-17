@@ -1,26 +1,31 @@
 /* Color Overrides */
 :root {
-    --bs-primary: #5b8bc5;
-    --bs-primary-rgb: 91, 139, 197;
+    --bs-primary: #1e3a5f;
+    --bs-primary-rgb: 30, 58, 95;
 }
 
 .btn-primary {
-    --bs-btn-bg: #5b8bc5;
-    --bs-btn-border-color: #5b8bc5;
-    --bs-btn-hover-bg: #4a75a8;
-    --bs-btn-hover-border-color: #4a75a8;
+    background-color: #1e3a5f !important;
+    border-color: #1e3a5f !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #152a45 !important;
+    border-color: #152a45 !important;
 }
 
 .text-primary {
-    color: #5b8bc5 !important;
+    color: #1e3a5f !important;
 }
 
 .border-primary {
-    border-color: #5b8bc5 !important;
+    border-color: #1e3a5f !important;
 }
 
 .bg-primary {
-    background-color: #5b8bc5 !important;
+    background-color: #1e3a5f !important;
 }
 
 /* Global Styles */
@@ -41,7 +46,6 @@ section {
 }
 
 .hero-section {
-    min-height: 50vh;
     display: flex;
     align-items: center;
 }
@@ -135,7 +139,7 @@ section {
 }
 
 .skills-section strong {
-    color: #5b8bc5;
+    color: #1e3a5f;
 }
 
 .skills-section .col-lg-6 {
@@ -145,7 +149,7 @@ section {
 
 /* Contact Section */
 .contact-section a {
-    color: #5b8bc5;
+    color: #1e3a5f;
 }
 
 .contact-section .btn-outline-dark:hover,
