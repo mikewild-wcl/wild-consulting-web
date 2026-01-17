@@ -41,9 +41,15 @@ section {
 }
 
 .hero-section {
-    min-height: 30vh;
+    min-height: 50vh;
     display: flex;
-    /*align-items: center;*/
+    align-items: center;
+}
+
+.hero-logo {
+    max-width: 250px;
+    height: auto;
+    mix-blend-mode: multiply;
 }
 
 .services-section {
@@ -152,6 +158,10 @@ section {
     .hero-section {
         min-height: auto;
         padding: 2rem 0;
+    }
+
+    .hero-logo {
+        max-width: 150px;
     }
 
     .display-4 {
