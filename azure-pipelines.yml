@@ -10,12 +10,16 @@ trigger:
     - main
   paths:
     exclude:
+    - /docs/**
     - .claude/settings.local.json
     - CLAUDE.md
     - copilot-instructions.md
     - README.md
 
-pr: none # Disable PR trigger
+pr:
+  branches:
+    include:
+    - main
 
 variables:
   buildConfiguration: 'Release'
@@ -25,6 +29,7 @@ variables:
   #targetRuntime: 'linux-x64'
   targetRuntime: 'win-x86'
   ftpServerEndpoint: 'wildconsulting_ftp'
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # Check if the build is for the main branch
 
 stages:
 
@@ -87,7 +92,7 @@ stages:
         artifactName: 'wild-consulting-web'
 
 - stage: Deploy
-
+  condition: and(succeeded(), eq(variables.isMain, true)) # Only deploy if the build succeeded and it's the main branch 
   variables:
   - group: WildConsultingDeploymentSettings
 
