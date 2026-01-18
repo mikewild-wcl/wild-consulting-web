@@ -1,26 +1,31 @@
 /* Color Overrides */
 :root {
-    --bs-primary: #5b8bc5;
-    --bs-primary-rgb: 91, 139, 197;
+    --bs-primary: #1e3a5f;
+    --bs-primary-rgb: 30, 58, 95;
 }
 
 .btn-primary {
-    --bs-btn-bg: #5b8bc5;
-    --bs-btn-border-color: #5b8bc5;
-    --bs-btn-hover-bg: #4a75a8;
-    --bs-btn-hover-border-color: #4a75a8;
+    background-color: #1e3a5f !important;
+    border-color: #1e3a5f !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #152a45 !important;
+    border-color: #152a45 !important;
 }
 
 .text-primary {
-    color: #5b8bc5 !important;
+    color: #1e3a5f !important;
 }
 
 .border-primary {
-    border-color: #5b8bc5 !important;
+    border-color: #1e3a5f !important;
 }
 
 .bg-primary {
-    background-color: #5b8bc5 !important;
+    background-color: #1e3a5f !important;
 }
 
 /* Global Styles */
@@ -41,9 +46,14 @@ section {
 }
 
 .hero-section {
-    min-height: 30vh;
     display: flex;
-    /*align-items: center;*/
+    align-items: center;
+}
+
+.hero-logo {
+    max-width: 250px;
+    height: auto;
+    mix-blend-mode: multiply;
 }
 
 .services-section {
@@ -96,9 +106,15 @@ section {
     font-size: 1.25rem;
 }
 
-.nav-link {
+.navbar-dark .nav-link {
     font-weight: 500;
     transition: color 0.3s ease;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-dark .nav-link:hover,
+.navbar-dark .nav-link:focus {
+    color: #ffffff !important;
 }
 
 /* Button Enhancements */
@@ -129,7 +145,7 @@ section {
 }
 
 .skills-section strong {
-    color: #5b8bc5;
+    color: #1e3a5f;
 }
 
 .skills-section .col-lg-6 {
@@ -139,7 +155,7 @@ section {
 
 /* Contact Section */
 .contact-section a {
-    color: #5b8bc5;
+    color: #1e3a5f;
 }
 
 .contact-section .btn-outline-dark:hover,
@@ -152,6 +168,10 @@ section {
     .hero-section {
         min-height: auto;
         padding: 2rem 0;
+    }
+
+    .hero-logo {
+        max-width: 150px;
     }
 
     .display-4 {
