@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-// ReSharper disable All
+using Microsoft.Extensions.Primitives;
 
 var featuresList = new StringValues(
     "accelerometer 'none';" +
@@ -42,8 +41,6 @@ var permissionsList = new StringValues(
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -66,12 +63,12 @@ app.UseXContentTypeOptions()
     .UseXfo(xfo => xfo.Deny())
     .UseCsp(options => options
         .DefaultSources(s => s.Self())
-        .StyleSources(s => s.Self())
-        .ScriptSources(s => s.Self())
+        .StyleSources(s => s.Self().UnsafeInline())
+        .ScriptSources(s => s.Self().UnsafeInline())
         .ObjectSources(s => s.None()))
     .Use(async (context, next) =>
     {
-        context.Response.Headers.Append("Expect-CT", "max-age=0, enforce"); //Not using report-uri=
+        context.Response.Headers.Append("Expect-CT", "max-age=0, enforce");
         context.Response.Headers.Append("Feature-Policy", featuresList);
         context.Response.Headers.Append("Permissions-Policy", permissionsList);
         await next.Invoke();
@@ -79,12 +76,14 @@ app.UseXContentTypeOptions()
 
 app.UseHttpsRedirection();
 
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapGet("/api/config", (IConfiguration configuration) =>
+    Results.Ok(new { email = configuration["ContactSettings:Email"] ?? string.Empty }));
+
+app.MapFallbackToFile("index.html");
 
 await app.RunAsync();

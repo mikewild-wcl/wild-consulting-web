@@ -18,6 +18,27 @@ FTP Server uri and credentials are saved in a variable group in the library name
 
 appSettings are overridden by a step in the pipeline. Settings are copied from a variable grpoup named **WildConsultingWebAppSettings**.
 
+## Running the Application
+
+### Development (with hot-reload)
+```bash
+cd src/WildConsulting.WebSite.Core/ClientApp
+npm run dev
+```
+Then in another terminal:
+```bash
+cd src/WildConsulting.WebSite.Core
+dotnet run
+```
+
+### Production build
+```bash
+cd src/WildConsulting.WebSite.Core/ClientApp
+npm run build
+cd ..
+dotnet run
+```
+
 ## Security
 
 Web site security headers are configured in `Program.cs` using using [NetEscapades.AspNetCore.SecurityHeaders](https://github.com/andrewlock/NetEscapades.AspNetCore.SecurityHeaders). 
