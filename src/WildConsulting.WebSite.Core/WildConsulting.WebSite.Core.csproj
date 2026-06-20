@@ -10,6 +10,20 @@
     <PackageReference Include="Microsoft.Build" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" />
+
+    <!-- Pin Nuget package versions to fix NU1901. Might not be needed if Microsoft.VisualStudio.Web.CodeGenerators.Mvc is updated -->
+    <PackageReference Include="Nuget.Packaging">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nuget.ProjectModel">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nuget.Protocol">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
