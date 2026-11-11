@@ -24,8 +24,6 @@ pr:
 variables:
   buildConfiguration: 'Release'
   buildPoolVmImage: 'ubuntu-latest'
-  dotNetFramework: 'net10.0'
-  dotNetVersion: '10.0.x'
   #targetRuntime: 'linux-x64'
   targetRuntime: 'win-x86'
   ftpServerEndpoint: 'wildconsulting_ftp'
@@ -48,7 +46,7 @@ stages:
       displayName: 'Install .Net SDK'
       inputs:
         packageType: 'sdk'
-        version: $(dotNetVersion)
+        useGlobalJson: true
 
     - task: DotNetCoreCLI@2
       displayName: Restore
@@ -75,7 +73,7 @@ stages:
       inputs:
         command: publish
         publishWebProjects: True
-        arguments: '--configuration $(BuildConfiguration) --framework $(dotNetFramework) --runtime $(targetRuntime) --self-contained --output $(Build.ArtifactStagingDirectory)'
+        arguments: '--configuration $(BuildConfiguration) --runtime $(targetRuntime) --self-contained --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
 
     - task: FileTransform@2

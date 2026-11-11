@@ -20,6 +20,6 @@ All employees are very experienced software developers and are expected to be ab
 - When creating Web API projects, prefer minimal APIs project.
 
 ## Testing Guidelines
-- Use xUnit for unit tests.
-- Use FluentAssertions version 7.2.0 for assertions.
+- Use xUnit v3 for unit tests.
+- Use Shouldly for assertions.
 - Use Moq for mocking.

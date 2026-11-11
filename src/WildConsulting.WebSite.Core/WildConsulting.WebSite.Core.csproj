@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
-    <PackageReference Include="Microsoft.Build" />
+    <!--<PackageReference Include="Microsoft.Build" />-->
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" />
 
