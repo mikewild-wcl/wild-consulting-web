@@ -67,6 +67,8 @@ stages:
         command: test
         projects: '**/*.Tests.csproj'
         arguments: '--configuration $(buildConfiguration)'
+        # Microsoft.Testing.Platform rejects the VSTest --logger flag this task adds by default
+        publishTestResults: false
 
     - task: DotNetCoreCLI@2
       displayName: Publish as self-contained application
